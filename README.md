@@ -1,5 +1,9 @@
 # fast-date-format
 
+[![Build Status](https://travis-ci.org/SerayaEryn/fast-date-format.svg?branch=master)](https://travis-ci.org/SerayaEryn/fast-date-format)
+[![Coverage Status](https://coveralls.io/repos/github/SerayaEryn/fast-date-format/badge.svg?branch=master)](https://coveralls.io/github/SerayaEryn/fast-date-format?branch=master)
+[![NPM version](https://img.shields.io/npm/v/fast-date-format.svg?style=flat)](https://www.npmjs.com/package/fast-date-format)
+
 `fast-date-format` is significantly faster than other date formatting modules. 
 
 ## Installation
@@ -66,7 +70,7 @@ Supported formatting tokens:
 | x             | `1528643900952`    | Unix timestamp in mx |
 
 ### format(dateFormat, [date])
-Formats the `date` according to the `dateFormat`. If no date is passed the current date is used.;
+Formats the `date` according to the `dateFormat`. If no date is passed the current date is used.
 
 ## License
 
