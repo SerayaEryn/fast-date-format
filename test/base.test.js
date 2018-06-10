@@ -6,12 +6,13 @@ var DateFormatter = require('..');
 
 test('x', (t) => {
   t.plan(1);
-  var date = new Date(2000, 2, 1, 3, 4, 5, 1);
+  var date = new Date();
+  date.setTime(951879845001)
   var dateFormatter = new DateFormatter();
 
   var formatted = dateFormatter.format('x', date)
 
-  t.strictEquals(formatted, '951876245001')
+  t.strictEquals(formatted, '951879845001')
 })
 
 test('ZZ', (t) => {

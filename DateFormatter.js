@@ -60,7 +60,7 @@ var tokenToReplacement = {
   E: '${now.getDay() + 1}',
   dddd: '${days[now.getDay()]}',
   ddd: '${daysShort[now.getDay()]}',
-  x: '${padZero2(now.getTime())}',
+  x: '${now.getTime()}',
   HH: '${padZero2(now.getHours())}',
   H: '${now.getHours()}',
   hh: '${padZero2(now.getHours() % 12 != 0 ? now.getHours() % 12 : 12)}',
