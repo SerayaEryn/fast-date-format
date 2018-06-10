@@ -1,7 +1,7 @@
 {
-  "name": "fast-date-formatter",
+  "name": "fast-date-format",
   "version": "1.0.0",
-  "description": "fast date formatter",
+  "description": "fast date formating",
   "main": "DateFormatter.js",
   "scripts": {
     "unit": "tap test/*.test.js",
