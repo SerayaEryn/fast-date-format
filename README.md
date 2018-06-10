@@ -26,7 +26,7 @@ dateFormat.format('YYYYMMDD', new Date());
 ```bash
 $ npm run benchmark
 
-> fast-date-formatter@1.0.0 benchmark 
+> fast-date-format@1.0.0 benchmark 
 > node benchmark/benchmark.js
 
 moment x 379,597 ops/sec ±2.61% (82 runs sampled)
@@ -67,7 +67,7 @@ Supported formatting tokens:
 | SSS           | `000..999`         | Milliseconds         |
 | ZZ            | `-02:00`           | Offset from UTC      |
 | Z             | `-0200`            | Offset from UTC      |
-| x             | `1528643900952`    | Unix timestamp in mx |
+| x             | `1528643900952`    | Unix timestamp in ms |
 
 ### format(dateFormat, [date])
 Formats the `date` according to the `dateFormat`. If no date is passed the current date is used.
