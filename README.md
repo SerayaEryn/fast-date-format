@@ -60,10 +60,10 @@ Supported formatting tokens:
 | DD            | `01..31`           | Day of month         |
 | D             | `1..31`            | Day of month         |
 | E             | `1..7`             | Day of week          |
-| m             | `1..60`            | Minutes              |
-| mm            | `01..60`           | Minutes              |
-| s             | `1..60`            | Seconds              |
-| ss            | `01..60`           | Seconds              |
+| m             | `0..59`            | Minutes              |
+| mm            | `00..59`           | Minutes              |
+| s             | `0..59`            | Seconds              |
+| ss            | `00..59`           | Seconds              |
 | SSS           | `000..999`         | Milliseconds         |
 | ZZ            | `-02:00`           | Offset from UTC      |
 | Z             | `-0200`            | Offset from UTC      |
