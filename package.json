@@ -11,6 +11,17 @@
     "coverage": "npm run coveralls && tap --coverage-report=lcov",
     "benchmark": "node benchmark/benchmark.js"
   },
+  "keywords": [
+    "date",
+    "format"
+  ],
+  "engines": {
+    "node": ">= 4.9.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SerayaEryn/fast-date-format.git"
+  },
   "author": "Denis Fäcke",
   "license": "MIT",
   "devDependencies": {
