@@ -50,8 +50,8 @@ function buildFormatter(dateFormat) {
 }
 
 var tokenToReplacement = {
-  ZZ: '${now.getTimezoneOffset() >= 0 ? \'+\':\'-\'}${padZero2(Math.abs(Math.floor(now.getTimezoneOffset() / 60)))}:${padZero2(now.getTimezoneOffset() % 60)}',
-  Z: '${now.getTimezoneOffset() >= 0 ? \'+\':\'-\'}${padZero2(Math.abs(Math.floor(now.getTimezoneOffset() / 60)))}${padZero2(now.getTimezoneOffset() % 60)}',
+  ZZ: '${now.getTimezoneOffset() >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(Math.floor(now.getTimezoneOffset() / 60)))}:${padZero2(now.getTimezoneOffset() % 60)}',
+  Z: '${now.getTimezoneOffset() >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(Math.floor(now.getTimezoneOffset() / 60)))}${padZero2(now.getTimezoneOffset() % 60)}',
   SSS: '${padZero3(now.getMilliseconds())}',
   ss: '${padZero2(now.getSeconds())}',
   s: '${now.getSeconds()}',

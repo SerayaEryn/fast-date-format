@@ -96,38 +96,38 @@ test('', (t) => {
 
 test('offset 60', (t) => {
   t.plan(1);
-  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'+\':\'-\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
+  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
 
   var formatted = utcOffset(60, padZero2);
 
-  t.strictEquals(formatted, '+0100')
+  t.strictEquals(formatted, '-0100')
 })
 
 test('offset 90', (t) => {
   t.plan(1);
-  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'+\':\'-\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
+  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
 
   var formatted = utcOffset(90, padZero2);
 
-  t.strictEquals(formatted, '+0130')
+  t.strictEquals(formatted, '-0130')
 })
 
 test('offset 180', (t) => {
   t.plan(1);
-  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'+\':\'-\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
+  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
 
   var formatted = utcOffset(180, padZero2);
 
-  t.strictEquals(formatted, '+0300')
+  t.strictEquals(formatted, '-0300')
 })
 
 test('offset 180', (t) => {
   t.plan(1);
-  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'+\':\'-\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
+  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
 
   var formatted = utcOffset(-180, padZero2);
 
-  t.strictEquals(formatted, '-0300')
+  t.strictEquals(formatted, '+0300')
 })
 
 function padZero2(integer) {
