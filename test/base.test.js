@@ -15,26 +15,6 @@ test('x', (t) => {
   t.strictEquals(formatted, '951879845001')
 })
 
-test('ZZ', (t) => {
-  t.plan(1);
-  var date = new Date(2000, 2, 1, 3, 4, 5, 1);
-  var dateFormatter = new DateFormatter();
-
-  var formatted = dateFormatter.format('ZZ', date)
-
-  t.ok(/[+-]\d{2}:\d{2}/.test(formatted))
-})
-
-test('Z', (t) => {
-  t.plan(1);
-  var date = new Date(2000, 2, 1, 3, 4, 5, 1);
-  var dateFormatter = new DateFormatter();
-
-  var formatted = dateFormatter.format('Z', date)
-
-  t.ok(/[+-]\d{4}/.test(formatted))
-})
-
 test('YYYYMMDD', (t) => {
   t.plan(1);
   var date = new Date(2000, 2, 1, 3, 4, 5, 1);
@@ -93,46 +73,3 @@ test('', (t) => {
 
   t.ok(formatted);
 })
-
-test('offset 60', (t) => {
-  t.plan(1);
-  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
-
-  var formatted = utcOffset(60, padZero2);
-
-  t.strictEquals(formatted, '-0100')
-})
-
-test('offset 90', (t) => {
-  t.plan(1);
-  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
-
-  var formatted = utcOffset(90, padZero2);
-
-  t.strictEquals(formatted, '-0130')
-})
-
-test('offset 180', (t) => {
-  t.plan(1);
-  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
-
-  var formatted = utcOffset(180, padZero2);
-
-  t.strictEquals(formatted, '-0300')
-})
-
-test('offset 180', (t) => {
-  t.plan(1);
-  var utcOffset = Function('offset', 'padZero2', 'return `${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(Math.floor(offset / 60)))}${padZero2(offset % 60)}`');
-
-  var formatted = utcOffset(-180, padZero2);
-
-  t.strictEquals(formatted, '+0300')
-})
-
-function padZero2(integer) {
-  if (integer > 9) {
-    return integer;
-  }
-  return `0${integer}`;
-}
