@@ -34,7 +34,7 @@ DateFormatter.prototype.format = function format(dateFormat, date) {
 function buildFormatter(dateFormat) {
   var tokens = tokenizer.tokenize(dateFormat);
   var functionString = '';
-  if (tokens.includes('Z') || tokens.includes('ZZ')) {
+  if (tokens.indexOf('Z') != -1 || tokens.indexOf('ZZ') != -1) {
     functionString += 'var offset = now.getTimezoneOffset();\n';
   }
   functionString += 'return `' + tokens.map(processToken).join('') + '`';
