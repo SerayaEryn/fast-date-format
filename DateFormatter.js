@@ -33,8 +33,11 @@ DateFormatter.prototype.format = function format(dateFormat, date) {
 
 function buildFormatter(dateFormat) {
   var tokens = tokenizer.tokenize(dateFormat);
-  var functionString = 'return `' + tokens.map(processToken).join('') + '`';
-  
+  var functionString = '';
+  if (tokens.includes('Z') || tokens.includes('ZZ')) {
+    functionString += 'var offset = now.getTimezoneOffset();\n';
+  }
+  functionString += 'return `' + tokens.map(processToken).join('') + '`';
   return Function(
     'now',
     'padZero2',
@@ -50,8 +53,8 @@ function buildFormatter(dateFormat) {
 }
 
 var tokenToReplacement = {
-  ZZ: '${now.getTimezoneOffset() >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(~~(now.getTimezoneOffset() / 60)))}:${padZero2(now.getTimezoneOffset() % 60)}',
-  Z: '${now.getTimezoneOffset() >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(~~(now.getTimezoneOffset() / 60)))}${padZero2(now.getTimezoneOffset() % 60)}',
+  ZZ: '${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(~~(offset / 60)))}:${padZero2(offset % 60)}',
+  Z: '${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(~~(offset / 60)))}${padZero2(offset % 60)}',
   SSS: '${padZero3(now.getMilliseconds())}',
   ss: '${padZero2(now.getSeconds())}',
   s: '${now.getSeconds()}',
