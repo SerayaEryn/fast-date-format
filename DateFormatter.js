@@ -1,22 +1,23 @@
-'use strict';
+'use strict'
 
-var months = require('./lib/months').months;
-var monthsShort = require('./lib/months').monthsShort;
-var days = require('./lib/days').days;
-var daysShort = require('./lib/days').daysShort;
-var dayCount = require('./lib/days').dayCount;
-var tokenizer = require('./lib/tokenizer');
+var months = require('./lib/months').months
+var monthsShort = require('./lib/months').monthsShort
+var days = require('./lib/days').days
+var daysShort = require('./lib/days').daysShort
+var dayCount = require('./lib/days').dayCount
+var tokenizer = require('./lib/tokenizer')
+var genfun = require('generate-function')
 
-function DateFormatter() {
-  this.formatters = {};
+function DateFormatter () {
+  this.formatters = {}
 }
 
-DateFormatter.prototype.format = function format(dateFormat, date) {
+DateFormatter.prototype.format = function format (dateFormat, date) {
   if (!date) {
-    date = new Date();
+    date = new Date()
   }
   if (!this.formatters[dateFormat]) {
-    this.formatters[dateFormat] = buildFormatter(dateFormat);
+    this.formatters[dateFormat] = buildFormatter(dateFormat)
   }
   return this.formatters[dateFormat](
     date,
@@ -28,30 +29,23 @@ DateFormatter.prototype.format = function format(dateFormat, date) {
     monthsShort,
     months,
     dayCount
-  );
+  )
 }
 
-function buildFormatter(dateFormat) {
-  var tokens = tokenizer.tokenize(dateFormat);
-  var functionString = '';
-  if (tokens.indexOf('Z') != -1 || tokens.indexOf('ZZ') != -1) {
-    functionString += 'var offset = now.getTimezoneOffset();\n';
+function buildFormatter (dateFormat) {
+  var tokens = tokenizer.tokenize(dateFormat)
+  var gen = genfun()
+  gen('function format (now, padZero2, padZero3, getDayofYear, ' +
+    'daysShort, days, monthsShort, months, dayCount) {')
+  if (tokens.indexOf('Z') !== -1 || tokens.indexOf('ZZ') !== -1) {
+    gen('var offset = now.getTimezoneOffset()')
   }
-  functionString += 'return `' + tokens.map(processToken).join('') + '`';
-  return Function(
-    'now',
-    'padZero2',
-    'padZero3',
-    'getDayofYear',
-    'daysShort',
-    'days',
-    'monthsShort',
-    'months',
-    'dayCount',
-    functionString
-  );
+  gen('return `' + tokens.map(processToken).join('') + '`')
+  gen('}')
+  return gen.toFunction()
 }
 
+/* eslint-disable no-template-curly-in-string */
 var tokenToReplacement = {
   ZZ: '${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(~~(offset / 60)))}:${padZero2(offset % 60)}',
   Z: '${offset >= 0 ? \'-\':\'+\'}${padZero2(Math.abs(~~(offset / 60)))}${padZero2(offset % 60)}',
@@ -82,48 +76,49 @@ var tokenToReplacement = {
   YYYY: '${now.getFullYear()}',
   YY: '${now.getFullYear().toString().substring(2)}'
 }
+/* eslint-enable no-template-curly-in-string */
 
-function processToken(token) {
+function processToken (token) {
   if (tokenToReplacement[token]) {
-    return tokenToReplacement[token];
+    return tokenToReplacement[token]
   }
-  return token;
+  return token
 }
 
-function padZero2(integer) {
+function padZero2 (integer) {
   if (integer > 9) {
-    return integer;
+    return integer
   }
-  return `0${integer}`;
+  return `0${integer}`
 }
 
-function padZero3(integer) {
+function padZero3 (integer) {
   if (integer > 99) {
-    return integer;
+    return integer
   }
   if (integer > 9) {
-    return `0${integer}`;
+    return `0${integer}`
   }
-  return `00${integer}`;
+  return `00${integer}`
 }
 
-function getDayOfYear(dayCount, now) {
-  var month = now.getMonth();
-  var date = now.getDate();
-  var dayOfYear = dayCount[month] + date;
+function getDayOfYear (dayCount, now) {
+  var month = now.getMonth()
+  var date = now.getDate()
+  var dayOfYear = dayCount[month] + date
 
-  var year = now.getFullYear();
-  var isLeapYear;
-  if(year % 4 !== 0) {
-    isLeapYear = false;
+  var year = now.getFullYear()
+  var isLeapYear
+  if (year % 4 !== 0) {
+    isLeapYear = false
   } else {
-    isLeapYear = year % 100 !== 0 || year % 400 === 0;
+    isLeapYear = year % 100 !== 0 || year % 400 === 0
   }
 
-  if(month > 1 && isLeapYear) {
-    dayOfYear++;
+  if (month > 1 && isLeapYear) {
+    dayOfYear++
   }
-  return dayOfYear;
+  return dayOfYear
 }
 
-module.exports = DateFormatter;
+module.exports = DateFormatter
