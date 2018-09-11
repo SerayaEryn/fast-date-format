@@ -102,20 +102,18 @@ function padZero3 (integer) {
   return `00${integer}`
 }
 
+function isLeapYear(year) {
+  return (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0)
+}
+
 function getDayOfYear (dayCount, now) {
   var month = now.getMonth()
   var date = now.getDate()
-  var dayOfYear = dayCount[month] + date
-
   var year = now.getFullYear()
-  var isLeapYear
-  if (year % 4 !== 0) {
-    isLeapYear = false
-  } else {
-    isLeapYear = year % 100 !== 0 || year % 400 === 0
-  }
 
-  if (month > 1 && isLeapYear) {
+  var dayOfYear = dayCount[month] + date 
+
+  if (month > 1 && isLeapYear(year)) {
     dayOfYear++
   }
   return dayOfYear
