@@ -13,8 +13,8 @@ function DateFormatter () {
 }
 
 DateFormatter.prototype.format = function format (dateFormat, date)) {
-  if (!date) {	
-    date = new Date()	
+  if (!date) {
+    date = new Date()
   }
   if (!this.formatters[dateFormat]) {
     this.formatters[dateFormat] = buildFormatter(dateFormat)
