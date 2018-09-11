@@ -12,10 +12,7 @@ function DateFormatter () {
   this.formatters = {}
 }
 
-DateFormatter.prototype.format = function format (dateFormat, date) {
-  if (!date) {
-    date = new Date()
-  }
+DateFormatter.prototype.format = function format (dateFormat, date = new Date()) {
   if (!this.formatters[dateFormat]) {
     this.formatters[dateFormat] = buildFormatter(dateFormat)
   }
