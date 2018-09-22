@@ -13,7 +13,9 @@
   },
   "keywords": [
     "date",
-    "format"
+    "format",
+    "dateformat",
+    "time"
   ],
   "engines": {
     "node": ">= 4.9.1"
