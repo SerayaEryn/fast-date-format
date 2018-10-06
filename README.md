@@ -43,6 +43,8 @@ Supported formatting tokens:
 
 | Token         | Example	           | Description           |
 | ------------- | ------------------ |---------------------- |
+| YYYY          | `2018`             | Year                  |
+| YY            | `18`               | 2 Digit Year          |
 | MMMM          | `January..December`| Month name            |
 | MMM           | `Jan..Dec`         | 3 letter month name   |
 | MM            | `01..12`           | Month                 |
