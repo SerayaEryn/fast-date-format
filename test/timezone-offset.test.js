@@ -11,9 +11,9 @@ test('offset 60', (t) => {
       return 60
     }
   }
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('Z')
 
-  var formatted = dateFormatter.format('Z', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '-0100')
 })
@@ -25,9 +25,9 @@ test('offset 60', (t) => {
       return 60
     }
   }
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('ZZ')
 
-  var formatted = dateFormatter.format('ZZ', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '-01:00')
 })
@@ -39,9 +39,9 @@ test('offset 90', (t) => {
       return 90
     }
   }
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('Z')
 
-  var formatted = dateFormatter.format('Z', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '-0130')
 })
@@ -53,9 +53,9 @@ test('offset 90', (t) => {
       return 90
     }
   }
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('ZZ')
 
-  var formatted = dateFormatter.format('ZZ', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '-01:30')
 })
@@ -67,9 +67,9 @@ test('offset 180 - Z', (t) => {
       return 180
     }
   }
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('Z')
 
-  var formatted = dateFormatter.format('Z', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '-0300')
 })
@@ -81,9 +81,9 @@ test('offset 180 - Z', (t) => {
       return 180
     }
   }
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('ZZ')
 
-  var formatted = dateFormatter.format('ZZ', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '-03:00')
 })
@@ -95,9 +95,9 @@ test('offset -180 Z', (t) => {
       return -180
     }
   }
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('Z')
 
-  var formatted = dateFormatter.format('Z', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '+0300')
 })
@@ -109,9 +109,9 @@ test('offset -180 Z', (t) => {
       return -180
     }
   }
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('ZZ')
 
-  var formatted = dateFormatter.format('ZZ', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '+03:00')
 })
@@ -119,9 +119,9 @@ test('offset -180 Z', (t) => {
 test('ZZ', (t) => {
   t.plan(1)
   var date = new Date(2000, 2, 1, 3, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('ZZ')
 
-  var formatted = dateFormatter.format('ZZ', date)
+  var formatted = dateFormatter.format(date)
 
   t.ok(/[+-]\d{2}:\d{2}/.test(formatted))
 })
@@ -129,9 +129,9 @@ test('ZZ', (t) => {
 test('Z', (t) => {
   t.plan(1)
   var date = new Date(2000, 2, 1, 3, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('Z')
 
-  var formatted = dateFormatter.format('Z', date)
+  var formatted = dateFormatter.format(date)
 
   t.ok(/[+-]\d{4}/.test(formatted))
 })

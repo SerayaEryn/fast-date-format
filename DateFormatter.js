@@ -8,18 +8,15 @@ var dayCount = require('./lib/days').dayCount
 var tokenizer = require('./lib/tokenizer')
 var genfun = require('generate-function')
 
-function DateFormatter () {
-  this.formatters = {}
+function DateFormatter (dateFormat) {
+  this.formatter = buildFormatter(dateFormat)
 }
 
-DateFormatter.prototype.format = function format (dateFormat, date) {
+DateFormatter.prototype.format = function format (date) {
   if (!date) {
     date = new Date()
   }
-  if (!this.formatters[dateFormat]) {
-    this.formatters[dateFormat] = buildFormatter(dateFormat)
-  }
-  return this.formatters[dateFormat](
+  return this.formatter(
     date,
     padZero2,
     padZero3,
@@ -102,7 +99,7 @@ function padZero3 (integer) {
   return `00${integer}`
 }
 
-function isLeapYear(year) {
+function isLeapYear (year) {
   return (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0)
 }
 
@@ -111,7 +108,7 @@ function getDayOfYear (dayCount, now) {
   var date = now.getDate()
   var year = now.getFullYear()
 
-  var dayOfYear = dayCount[month] + date 
+  var dayOfYear = dayCount[month] + date
 
   if (month > 1 && isLeapYear(year)) {
     dayOfYear++

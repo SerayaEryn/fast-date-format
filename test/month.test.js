@@ -72,21 +72,21 @@ test('M', (t) => {
 
 function testFormatMonth (t, format, month, h) {
   var date = new Date(2000, month, 1, 1, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
-  var formatted = dateFormatter.format(format, date)
+  var dateFormatter = new DateFormatter(format)
+  var formatted = dateFormatter.format(date)
   t.strictEquals(formatted, h)
 }
 
 function testMonthName (t, month, name) {
   var date = new Date(2000, month, 1, 3, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
-  var formatted = dateFormatter.format('MMMM', date)
+  var dateFormatter = new DateFormatter('MMMM')
+  var formatted = dateFormatter.format(date)
   t.strictEquals(formatted, name)
 }
 
 function test3LetterMonthName (t, month, name) {
   var date = new Date(2000, month, 1, 3, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
-  var formatted = dateFormatter.format('MMM', date)
+  var dateFormatter = new DateFormatter('MMM')
+  var formatted = dateFormatter.format(date)
   t.strictEquals(formatted, name)
 }

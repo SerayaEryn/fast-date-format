@@ -16,10 +16,10 @@ npm install fast-date-format
 ```js
 const DateFormat = require('fast-date-format');
 
-const dateFormat = new DateFormat();
+const dateFormat = new DateFormat('YYYYMMDD');
 
-dateFormat.format('YYYYMMDD');
-dateFormat.format('YYYYMMDD', new Date());
+dateFormat.format();
+dateFormat.format(new Date());
 ```
 
 ## Benchmark
@@ -27,13 +27,14 @@ dateFormat.format('YYYYMMDD', new Date());
 ```bash
 $ npm run benchmark
 
-> fast-date-format@1.0.0 benchmark 
+> fast-date-format@1.0.3 benchmark 
 > node benchmark/benchmark.js
 
-moment x 379,597 ops/sec ±2.61% (82 runs sampled)
-date-format x 591,309 ops/sec ±2.90% (79 runs sampled)
-dateformat x 159,647 ops/sec ±1.42% (83 runs sampled)
-fast-date-format x 3,236,908 ops/sec ±1.22% (87 runs sampled)
+moment x 223,710 ops/sec ±1.91% (88 runs sampled)
+date-format x 273,560 ops/sec ±0.64% (90 runs sampled)
+dateformat x 113,432 ops/sec ±1.40% (82 runs sampled)
+fast-date-format x 2,049,721 ops/sec ±0.83% (91 runs sampled)
+fecha x 265,887 ops/sec ±1.03% (86 runs sampled)
 Fastest is fast-date-format
 ```
 

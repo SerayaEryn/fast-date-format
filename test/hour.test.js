@@ -203,23 +203,23 @@ test('A', (t) => {
 test('H', (t) => {
   t.plan(1)
   var date = new Date(2000, 2, 1, 3, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('H')
 
-  var formatted = dateFormatter.format('H', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '3')
 })
 
 function testFormatHour (t, format, hour, h) {
   var date = new Date(2000, 2, 1, hour, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
-  var formatted = dateFormatter.format(format, date)
+  var dateFormatter = new DateFormatter(format)
+  var formatted = dateFormatter.format(date)
   t.strictEquals(formatted, h)
 }
 
 function testAmPm (t, hour, aPM) {
   var date = new Date(2000, 2, 1, hour, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
-  var formatted = dateFormatter.format('A', date)
+  var dateFormatter = new DateFormatter('A')
+  var formatted = dateFormatter.format(date)
   t.strictEquals(formatted, aPM)
 }
