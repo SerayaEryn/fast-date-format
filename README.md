@@ -25,16 +25,13 @@ dateFormat.format(new Date());
 ## Benchmark
 
 ```bash
-$ npm run benchmark
-
-> fast-date-format@1.0.3 benchmark 
-> node benchmark/benchmark.js
-
-moment x 223,710 ops/sec ±1.91% (88 runs sampled)
-date-format x 273,560 ops/sec ±0.64% (90 runs sampled)
-dateformat x 113,432 ops/sec ±1.40% (82 runs sampled)
-fast-date-format x 2,049,721 ops/sec ±0.83% (91 runs sampled)
-fecha x 265,887 ops/sec ±1.03% (86 runs sampled)
+$ node benchmark/benchmark.js
+moment x 226,501 ops/sec ±0.74% (87 runs sampled)
+date-format x 276,927 ops/sec ±0.61% (86 runs sampled)
+dateformat x 112,760 ops/sec ±1.60% (85 runs sampled)
+fast-date-format x 2,207,410 ops/sec ±0.62% (90 runs sampled)
+fecha x 280,415 ops/sec ±1.27% (89 runs sampled)
+fecha x 2,035,050 ops/sec ±1.25% (89 runs sampled)
 Fastest is fast-date-format
 ```
 

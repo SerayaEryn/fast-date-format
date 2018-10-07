@@ -6,6 +6,7 @@ const days = require('./lib/days').days
 const daysShort = require('./lib/days').daysShort
 const dayCount = require('./lib/days').dayCount
 const tokenizer = require('./lib/tokenizer')
+const { generateOffset, generateOffsetColon } = require('./lib/offset')
 const genfun = require('generate-function')
 
 class DateFormatter {
@@ -31,7 +32,7 @@ function buildFormatter (dateFormat) {
   var tokens = tokenizer.tokenize(dateFormat)
   const gen = genfun()
   gen('function format (now) {')
-  generateVariables(tokens, gen);
+  generateVariables(tokens, gen)
   gen('return `' + tokens.map(processToken).join('') + '`')
   gen('}')
   return gen.toFunction()
@@ -39,8 +40,8 @@ function buildFormatter (dateFormat) {
 
 /* eslint-disable no-template-curly-in-string */
 const tokenToReplacement = {
-  ZZ: '${offset >= 0 ? \'-\':\'+\'}${offsetHours < 10 ? \'0\': \'\'}${offsetHours}:${offsetMinutes < 10 ? \'0\': \'\'}${offsetMinutes}',
-  Z: '${offset >= 0 ? \'-\' : \'+\'}${offsetHours < 10 ? \'0\' : \'\'}${offsetHours}${offsetMinutes < 10 ? \'0\' : \'\'}${offsetMinutes}',
+  ZZ: '${offsetWithColon[now.getTimezoneOffset() + 720]}',
+  Z: '${offsetWithoutColon[now.getTimezoneOffset() + 720]}',
   SSS: '${milliseconds < 100 ? \'0\' : \'\'}${milliseconds < 10 ? \'0\': \'\'}${milliseconds}',
   ss: '${seconds < 10 ? \'0\' : \'\'}${seconds}',
   s: '${seconds}',
@@ -61,8 +62,8 @@ const tokenToReplacement = {
   DDD: '${dayOfYear}',
   DD: '${date < 10 ? \'0\': \'\'}${date}',
   D: '${date}',
-  MMMM: '${this.months[now.getMonth()]}',
-  MMM: '${this.monthsShort[now.getMonth()]}',
+  MMMM: '${this.months[month]}',
+  MMM: '${this.monthsShort[month]}',
   MM: '${month < 9 ? \'0\': \'\'}${month + 1}',
   M: '${month + 1}',
   YYYY: '${year}',
@@ -71,11 +72,11 @@ const tokenToReplacement = {
 /* eslint-enable no-template-curly-in-string */
 
 function generateVariables (tokens, gen) {
-  if (tokens.includes('Z') || tokens.includes('ZZ')) {
-    gen('const offset = now.getTimezoneOffset()')
-    gen('const absOffset = offset < 0 ? -offset : offset')
-    gen('const offsetHours = ~~(absOffset / 60)')
-    gen('const offsetMinutes = absOffset % 60')
+  if (tokens.includes('Z')) {
+    generateOffset(gen)
+  }
+  if (tokens.includes('ZZ')) {
+    generateOffsetColon(gen)
   }
   if (tokens.includes('SSS')) {
     gen('const milliseconds = now.getMilliseconds()')
@@ -101,7 +102,7 @@ function generateVariables (tokens, gen) {
   if (tokens.includes('h') || tokens.includes('hh')) {
     gen('const hours12 = (hours + 11) % 12 + 1')
   }
-  if (tokens.includes('M') || tokens.includes('MM') || tokens.includes('DDD') || tokens.includes('DDDD')) {
+  if (tokens.includes('M') || tokens.includes('MM') || tokens.includes('MMM') || tokens.includes('MMMM') || tokens.includes('DDD') || tokens.includes('DDDD')) {
     gen('const month = now.getMonth()')
   }
   if (tokens.includes('DDD') || tokens.includes('DDDD')) {

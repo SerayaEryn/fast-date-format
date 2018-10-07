@@ -6,10 +6,12 @@ var moment = require('moment')
 var dateFormat = require('dateformat')
 var format = require('date-format')
 var fecha = require('fecha')
+var speedDate = require('speed-date')
 
 var DATE_FORMAT = ('YYYY.MM.DDTHH:mm:ss,SSS ZZ')
 var DateFormatter = require('../DateFormatter')
 var dateFormatter = new DateFormatter(DATE_FORMAT)
+var speedDateFormatter = speedDate(DATE_FORMAT)
 
 const suite = new Benchmark.Suite()
 
@@ -28,6 +30,9 @@ suite
   })
   .add('fecha', () => {
     fecha.format(new Date(), DATE_FORMAT)
+  })
+  .add('fecha', () => {
+    speedDateFormatter(new Date())
   })
   .on('cycle', function (event) {
     console.log(String(event.target))
