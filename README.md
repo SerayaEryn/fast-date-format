@@ -35,6 +35,16 @@ fecha x 2,035,050 ops/sec ±1.25% (89 runs sampled)
 Fastest is fast-date-format
 ```
 
+## Escaping
+
+To escape characters in a format, surround the characters with square brackets.
+
+```js
+const dateFormat = new DateFormat('[Month: ]MMMM');
+
+dateFormat.format(); // Month: December
+```
+
 ## API
 
 Supported formatting tokens:
