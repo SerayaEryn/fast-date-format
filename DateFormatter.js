@@ -20,10 +20,7 @@ class DateFormatter {
     this.formatter = buildFormatter(dateFormat).bind(this)
   }
 
-  format (date) {
-    if (!date) {
-      date = new Date()
-    }
+  format (date = new Date()) {
     return this.formatter(date)
   }
 }
