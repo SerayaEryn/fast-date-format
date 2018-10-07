@@ -1,28 +1,30 @@
 'use strict'
 
-var months = require('./lib/months').months
-var monthsShort = require('./lib/months').monthsShort
-var days = require('./lib/days').days
-var daysShort = require('./lib/days').daysShort
-var dayCount = require('./lib/days').dayCount
-var tokenizer = require('./lib/tokenizer')
-var genfun = require('generate-function')
+const months = require('./lib/months').months
+const monthsShort = require('./lib/months').monthsShort
+const days = require('./lib/days').days
+const daysShort = require('./lib/days').daysShort
+const dayCount = require('./lib/days').dayCount
+const tokenizer = require('./lib/tokenizer')
+const genfun = require('generate-function')
 
-function DateFormatter (dateFormat) {
-  this.dayCount = dayCount
-  this.daysShort = daysShort
-  this.days = days
-  this.monthsShort = monthsShort
-  this.months = months
-  this.dayCount = dayCount
-  this.formatter = buildFormatter(dateFormat).bind(this)
-}
-
-DateFormatter.prototype.format = function format (date) {
-  if (!date) {
-    date = new Date()
+class DateFormatter {
+  constructor (dateFormat) {
+    this.dayCount = dayCount
+    this.daysShort = daysShort
+    this.days = days
+    this.monthsShort = monthsShort
+    this.months = months
+    this.dayCount = dayCount
+    this.formatter = buildFormatter(dateFormat).bind(this)
   }
-  return this.formatter(date)
+
+  format (date) {
+    if (!date) {
+      date = new Date()
+    }
+    return this.formatter(date)
+  }
 }
 
 function buildFormatter (dateFormat) {
@@ -36,7 +38,7 @@ function buildFormatter (dateFormat) {
 }
 
 /* eslint-disable no-template-curly-in-string */
-var tokenToReplacement = {
+const tokenToReplacement = {
   ZZ: '${offset >= 0 ? \'-\':\'+\'}${offsetHours < 10 ? \'0\': \'\'}${offsetHours}:${offsetMinutes < 10 ? \'0\': \'\'}${offsetMinutes}',
   Z: '${offset >= 0 ? \'-\' : \'+\'}${offsetHours < 10 ? \'0\' : \'\'}${offsetHours}${offsetMinutes < 10 ? \'0\' : \'\'}${offsetMinutes}',
   SSS: '${milliseconds < 100 ? \'0\' : \'\'}${milliseconds < 10 ? \'0\': \'\'}${milliseconds}',
@@ -69,40 +71,40 @@ var tokenToReplacement = {
 /* eslint-enable no-template-curly-in-string */
 
 function generateVariables (tokens, gen) {
-  if (tokens.indexOf('Z') !== -1 || tokens.indexOf('ZZ') !== -1) {
-    gen('var offset = now.getTimezoneOffset()')
-    gen('var absOffset = offset < 0 ? -offset : offset')
-    gen('var offsetHours = ~~(absOffset / 60)')
-    gen('var offsetMinutes = absOffset % 60')
+  if (tokens.includes('Z') || tokens.includes('ZZ')) {
+    gen('const offset = now.getTimezoneOffset()')
+    gen('const absOffset = offset < 0 ? -offset : offset')
+    gen('const offsetHours = ~~(absOffset / 60)')
+    gen('const offsetMinutes = absOffset % 60')
   }
-  if (tokens.indexOf('SSS') !== -1) {
-    gen('var milliseconds = now.getMilliseconds()')
+  if (tokens.includes('SSS')) {
+    gen('const milliseconds = now.getMilliseconds()')
   }
-  if (tokens.indexOf('s') !== -1 || tokens.indexOf('ss') !== -1) {
-    gen('var seconds = now.getSeconds()')
+  if (tokens.includes('s') || tokens.includes('ss')) {
+    gen('const seconds = now.getSeconds()')
   }
-  if (tokens.indexOf('m') !== -1 || tokens.indexOf('mm') !== -1) {
-    gen('var minutes = now.getMinutes()')
+  if (tokens.includes('m') || tokens.includes('mm')) {
+    gen('const minutes = now.getMinutes()')
   }
-  if (tokens.indexOf('H') !== -1 || tokens.indexOf('HH') !== -1 || tokens.indexOf('A') !== -1 || tokens.indexOf('h') !== -1 || tokens.indexOf('hh') !== -1) {
-    gen('var hours = now.getHours()')
+  if (tokens.includes('H') || tokens.includes('HH') || tokens.includes('A') || tokens.includes('h') || tokens.includes('hh')) {
+    gen('const hours = now.getHours()')
   }
-  if (tokens.indexOf('D') !== -1 || tokens.indexOf('DD') !== -1 || tokens.indexOf('DDD') !== -1 || tokens.indexOf('DDDD') !== -1) {
-    gen('var date = now.getDate()')
+  if (tokens.includes('D') || tokens.includes('DD') || tokens.includes('DDD') || tokens.includes('DDDD')) {
+    gen('const date = now.getDate()')
   }
-  if (tokens.indexOf('YY') !== -1 || tokens.indexOf('YYYY') !== -1 || tokens.indexOf('DDD') !== -1 || tokens.indexOf('DDDD') !== -1) {
-    gen('var year = now.getFullYear()')
+  if (tokens.includes('YY') || tokens.includes('YYYY') || tokens.includes('DDD') || tokens.includes('DDDD')) {
+    gen('const year = now.getFullYear()')
   }
-  if (tokens.indexOf('k') !== -1 || tokens.indexOf('kk') !== -1) {
-    gen('var hours1 = now.getHours() + 1')
+  if (tokens.includes('k') || tokens.includes('kk')) {
+    gen('const hours1 = now.getHours() + 1')
   }
-  if (tokens.indexOf('h') !== -1 || tokens.indexOf('hh') !== -1) {
-    gen('var hours12 = (hours + 11) % 12 + 1')
+  if (tokens.includes('h') || tokens.includes('hh')) {
+    gen('const hours12 = (hours + 11) % 12 + 1')
   }
-  if (tokens.indexOf('M') !== -1 || tokens.indexOf('MM') !== -1 || tokens.indexOf('DDD') !== -1 || tokens.indexOf('DDDD') !== -1) {
-    gen('var month = now.getMonth()')
+  if (tokens.includes('M') || tokens.includes('MM') || tokens.includes('DDD') || tokens.includes('DDDD')) {
+    gen('const month = now.getMonth()')
   }
-  if (tokens.indexOf('DDD') !== -1 || tokens.indexOf('DDDD') !== -1) {
+  if (tokens.includes('DDD') || tokens.includes('DDDD')) {
     generateDayOfYear(gen)
   }
 }
@@ -115,8 +117,8 @@ function processToken (token) {
 }
 
 function generateDayOfYear (gen) {
-  gen(`var isLeapYear = (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0)
-  var dayOfYear = this.dayCount[month] + date
+  gen(`let isLeapYear = (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0)
+  let dayOfYear = this.dayCount[month] + date
   if (month > 1 && isLeapYear) {
     dayOfYear++
   }`)
