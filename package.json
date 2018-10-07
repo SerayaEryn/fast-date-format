@@ -38,7 +38,6 @@
     "tap": "^12.0.1"
   },
   "dependencies": {
-    "fastbench": "^1.0.1",
     "generate-function": "^2.3.1"
   }
 }
