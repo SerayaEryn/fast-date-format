@@ -32,7 +32,7 @@ const dateFormat = new DateFormat('[Month: ]MMMM');
 dateFormat.format(); // Month: December
 ```
 
-## API
+## Tokens
 
 Supported formatting tokens:
 
