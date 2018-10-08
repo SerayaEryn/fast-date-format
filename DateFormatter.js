@@ -10,27 +10,43 @@ const { generateOffset, generateOffsetColon } = require('./lib/offset')
 const genfun = require('generate-function')
 
 class DateFormatter {
-  constructor (dateFormat) {
+  constructor (options) {
+    const dateFormat = typeof options === 'string' ? options : options.dateFormat
     this.dayCount = dayCount
     this.daysShort = daysShort
     this.days = days
     this.monthsShort = monthsShort
     this.months = months
     this.dayCount = dayCount
-    this.formatter = buildFormatter(dateFormat).bind(this)
+    this._clearCache = this._clearCache.bind(this)
+    this.formatter = buildFormatter(dateFormat, options).bind(this)
   }
 
   format (date = new Date()) {
     return this.formatter(date)
   }
+
+  _clearCache () {
+    this.cache = null
+  }
 }
 
-function buildFormatter (dateFormat) {
+function buildFormatter (dateFormat, options) {
   var tokens = tokenizer.tokenize(dateFormat)
   const gen = genfun()
   gen('function format (now) {')
   generateVariables(tokens, gen)
-  gen('return `' + tokens.map(processToken).join('') + '`')
+  if (options.cache && !tokens.includes('SSS')) {
+    gen(`
+    if (!this.cache) {
+      this.cache = \`${tokens.map(processToken).join('')}\`
+      setTimeout(this._clearCache, 1000 - now.getMilliseconds())
+    }
+    return this.cache
+    `)
+  } else {
+    gen('return `' + tokens.map(processToken).join('') + '`')
+  }
   gen('}')
   return gen.toFunction()
 }

@@ -22,19 +22,6 @@ dateFormat.format();
 dateFormat.format(new Date());
 ```
 
-## Benchmark
-
-```bash
-$ node benchmark/benchmark.js
-moment x 226,501 ops/sec ±0.74% (87 runs sampled)
-date-format x 276,927 ops/sec ±0.61% (86 runs sampled)
-dateformat x 112,760 ops/sec ±1.60% (85 runs sampled)
-fast-date-format x 2,207,410 ops/sec ±0.62% (90 runs sampled)
-fecha x 280,415 ops/sec ±1.27% (89 runs sampled)
-fecha x 2,035,050 ops/sec ±1.25% (89 runs sampled)
-Fastest is fast-date-format
-```
-
 ## Escaping
 
 To escape characters in a format, surround the characters with square brackets.
@@ -80,8 +67,53 @@ Supported formatting tokens:
 | Z             | `-0200`            | Offset from UTC      |
 | x             | `1528643900952`    | Unix timestamp in ms |
 
-### format(dateFormat, [date])
+## API
+
+### DateFormat(options)
+
+Creates a new date formatter.
+
+### options
+
+Either a date format as a string or an object with the following properties:
+
+#### dateFormat
+
+A date format as a string.
+
+#### cache (optional)
+
+Enables caching to increase formatting speed if set to `true`. This is restricted to formats without milliseconds. Defaults to `false`.
+
+### DateFormat#format([date])
+
 Formats the `date` according to the `dateFormat`. If no date is passed the current date is used.
+
+## Benchmark
+
+```bash
+$ node benchmark/benchmark.js
+moment x 226,501 ops/sec ±0.74% (87 runs sampled)
+date-format x 276,927 ops/sec ±0.61% (86 runs sampled)
+dateformat x 112,760 ops/sec ±1.60% (85 runs sampled)
+fast-date-format x 2,207,410 ops/sec ±0.62% (90 runs sampled)
+fecha x 280,415 ops/sec ±1.27% (89 runs sampled)
+speed-date x 2,035,050 ops/sec ±1.25% (89 runs sampled)
+Fastest is fast-date-format
+```
+
+With activated `cache` option:
+
+```bash
+$ node benchmark/benchmarkCache.js
+moment x 288,008 ops/sec ±1.88% (82 runs sampled)
+date-format x 288,106 ops/sec ±0.52% (85 runs sampled)
+dateformat x 131,345 ops/sec ±1.36% (83 runs sampled)
+fast-date-format x 4,014,322 ops/sec ±1.94% (85 runs sampled)
+fecha x 355,271 ops/sec ±1.46% (86 runs sampled)
+speed-date x 2,670,824 ops/sec ±0.74% (90 runs sampled)
+Fastest is fast-date-format
+```
 
 ## License
 

@@ -8,9 +8,9 @@ var format = require('date-format')
 var fecha = require('fecha')
 var speedDate = require('speed-date')
 
-var DATE_FORMAT = ('YYYY.MM.DDTHH:mm:ss,SSS ZZ')
+var DATE_FORMAT = ('YYYY.MM.DDTHH:mm:ss')
 var DateFormatter = require('../DateFormatter')
-var dateFormatter = new DateFormatter(DATE_FORMAT)
+var dateFormatter = new DateFormatter({ dateFormat: DATE_FORMAT, cache: true })
 var speedDateFormatter = speedDate(DATE_FORMAT)
 
 const suite = new Benchmark.Suite()
