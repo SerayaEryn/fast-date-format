@@ -7,9 +7,9 @@ var DateFormatter = require('..')
 test('E', (t) => {
   t.plan(1)
   var date = new Date(2000, 2, 1, 3, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('E')
 
-  var formatted = dateFormatter.format('E', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '4')
 })
@@ -59,9 +59,9 @@ test('DDD', (t) => {
 test('No Leapyear 1', (t) => {
   t.plan(1)
   var date = new Date(2015, 2, 1, 3, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
+  var dateFormatter = new DateFormatter('DDDD')
 
-  var formatted = dateFormatter.format('DDDD', date)
+  var formatted = dateFormatter.format(date)
 
   t.strictEquals(formatted, '060')
 })
@@ -86,14 +86,14 @@ test('D', (t) => {
 
 function testFormatDate (t, format, date1, h) {
   var date = new Date(2000, 2, date1, 1, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
-  var formatted = dateFormatter.format(format, date)
+  var dateFormatter = new DateFormatter(format)
+  var formatted = dateFormatter.format(date)
   t.strictEquals(formatted, h)
 }
 
 function testFormatDayOfYear (t, format, month, date1, h) {
   var date = new Date(2000, month, date1, 1, 4, 5, 1)
-  var dateFormatter = new DateFormatter()
-  var formatted = dateFormatter.format(format, date)
+  var dateFormatter = new DateFormatter(format)
+  var formatted = dateFormatter.format(date)
   t.strictEquals(formatted, h)
 }

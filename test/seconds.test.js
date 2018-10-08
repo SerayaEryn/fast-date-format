@@ -26,7 +26,7 @@ test('s', (t) => {
 
 function testFormatSecond (t, format, second, h) {
   var date = new Date(2000, 2, 1, 1, 1, second, 1)
-  var dateFormatter = new DateFormatter()
-  var formatted = dateFormatter.format(format, date)
+  var dateFormatter = new DateFormatter(format)
+  var formatted = dateFormatter.format(date)
   t.strictEquals(formatted, h)
 }

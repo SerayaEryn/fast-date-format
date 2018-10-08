@@ -26,7 +26,7 @@ test('m', (t) => {
 
 function testFormatMinute (t, format, minute, h) {
   var date = new Date(2000, 2, 1, 1, minute, 5, 1)
-  var dateFormatter = new DateFormatter()
-  var formatted = dateFormatter.format(format, date)
+  var dateFormatter = new DateFormatter(format)
+  var formatted = dateFormatter.format(date)
   t.strictEquals(formatted, h)
 }
