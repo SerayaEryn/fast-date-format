@@ -9,6 +9,8 @@ const tokenizer = require('./lib/tokenizer')
 const { generateOffset, generateOffsetColon } = require('./lib/offset')
 const genfun = require('generate-function')
 
+const format = Symbol('format')
+
 class DateFormatter {
   constructor (options) {
     const dateFormat = typeof options === 'string' ? options : options.dateFormat
@@ -19,11 +21,11 @@ class DateFormatter {
     this.months = months
     this.dayCount = dayCount
     this._clearCache = this._clearCache.bind(this)
-    this.formatter = buildFormatter(dateFormat, options).bind(this)
+    this[format] = buildFormatter(dateFormat, options).bind(this)
   }
 
   format (date = new Date()) {
-    return this.formatter(date)
+    return this[format](date)
   }
 
   _clearCache () {
@@ -48,6 +50,7 @@ function buildFormatter (dateFormat, options) {
     gen('return `' + tokens.map(processToken).join('') + '`')
   }
   gen('}')
+  // console.log(gen.toString())
   return gen.toFunction()
 }
 
