@@ -38,7 +38,7 @@ function buildFormatter (dateFormat, options) {
   const gen = genfun()
   gen('function format (now) {')
   generateVariables(tokens, gen)
-  if (options.cache && !tokens.includes('SSS')) {
+  if (options.cache && !hasToken(tokens, 'SSS')) {
     gen(`
     if (!this.cache) {
       this.cache = \`${tokens.map(processToken).join('')}\`
@@ -88,49 +88,56 @@ const tokenToReplacement = {
 /* eslint-enable no-template-curly-in-string */
 
 function generateVariables (tokens, gen) {
-  if (tokens.includes('Z')) {
+  if (hasToken(tokens, 'Z')) {
     generateOffset(gen)
   }
-  if (tokens.includes('ZZ')) {
+  if (hasToken(tokens, 'ZZ')) {
     generateOffsetColon(gen)
   }
-  if (tokens.includes('SSS')) {
+  if (hasToken(tokens, 'SSS')) {
     gen('const milliseconds = now.getMilliseconds()')
   }
-  if (tokens.includes('s') || tokens.includes('ss')) {
+  if (hasToken(tokens, 's') || hasToken(tokens, 'ss')) {
     gen('const seconds = now.getSeconds()')
   }
-  if (tokens.includes('m') || tokens.includes('mm')) {
+  if (hasToken(tokens, 'm') || hasToken(tokens, 'mm')) {
     gen('const minutes = now.getMinutes()')
   }
-  if (tokens.includes('H') || tokens.includes('HH') || tokens.includes('A') || tokens.includes('h') || tokens.includes('hh')) {
+  if (hasToken(tokens, 'H') || hasToken(tokens, 'HH') || hasToken(tokens, 'A') || hasToken(tokens, 'h') || hasToken(tokens, 'hh')) {
     gen('const hours = now.getHours()')
   }
-  if (tokens.includes('D') || tokens.includes('DD') || tokens.includes('DDD') || tokens.includes('DDDD')) {
+  if (hasToken(tokens, 'D') || hasToken(tokens, 'DD') || hasToken(tokens, 'DDD') || hasToken(tokens, 'DDDD')) {
     gen('const date = now.getDate()')
   }
-  if (tokens.includes('YY') || tokens.includes('YYYY') || tokens.includes('DDD') || tokens.includes('DDDD')) {
+  if (hasToken(tokens, 'YY') || hasToken(tokens, 'YYYY') || hasToken(tokens, 'DDD') || hasToken(tokens, 'DDDD')) {
     gen('const year = now.getFullYear()')
   }
-  if (tokens.includes('k') || tokens.includes('kk')) {
+  if (hasToken(tokens, 'k') || hasToken(tokens, 'kk')) {
     gen('const hours1 = now.getHours() + 1')
   }
-  if (tokens.includes('h') || tokens.includes('hh')) {
+  if (hasToken(tokens, 'h') || hasToken(tokens, 'hh')) {
     gen('const hours12 = (hours + 11) % 12 + 1')
   }
-  if (tokens.includes('M') || tokens.includes('MM') || tokens.includes('MMM') || tokens.includes('MMMM') || tokens.includes('DDD') || tokens.includes('DDDD')) {
+  if (hasToken(tokens, 'M') || hasToken(tokens, 'MM') || hasToken(tokens, 'MMM') || hasToken(tokens, 'MMMM') || hasToken(tokens, 'DDD') || hasToken(tokens, 'DDDD')) {
     gen('const month = now.getMonth()')
   }
-  if (tokens.includes('DDD') || tokens.includes('DDDD')) {
+  if (hasToken(tokens, 'DDD') || hasToken(tokens, 'DDDD')) {
     generateDayOfYear(gen)
   }
 }
 
 function processToken (token) {
-  if (tokenToReplacement[token]) {
-    return tokenToReplacement[token]
+  if (!token.escaped && tokenToReplacement[token.token]) {
+    return tokenToReplacement[token.token]
   }
-  return token
+  return token.token
+}
+
+function hasToken (tokens, wantedToken) {
+  return tokens.some((token) => {
+    return token.token === wantedToken &&
+      !token.escaped
+  })
 }
 
 function generateDayOfYear (gen) {
