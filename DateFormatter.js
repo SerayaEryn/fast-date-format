@@ -26,7 +26,7 @@ class DateFormatter {
     this[formatSym] = buildFormatter(dateFormat, options).bind(this)
   }
 
-  format (now = new Date()) {
+  format (now) {
     return this[formatSym](now, this[dayCountSym])
   }
 
@@ -49,9 +49,13 @@ class DateFormatter {
 }
 
 function buildFormatter (dateFormat, options) {
+  if (knownFormats[dateFormat]) {
+    return knownFormats[dateFormat](dateFormat, options)
+  }
+
   var tokens = tokenizer.tokenize(dateFormat)
   const gen = genfun()
-  gen('function format (now, dayCount) {')
+  gen('function format (now = new Date(), dayCount) {')
   generateVariables(tokens, gen)
   if (options.cache) {
     gen(`
@@ -98,6 +102,19 @@ const tokenToReplacement = {
   M: '${month + 1}',
   YYYY: '${year}',
   YY: '${year.toString().substring(2)}'
+}
+
+const knownFormats = {
+  x: (dateFormat, options) => {
+    const gen = genfun()
+    gen('function format (now) {')
+    gen('if (now) {')
+    gen('return now.getTime() + \'\'')
+    gen('}')
+    gen('return Date.now() + \'\'')
+    gen('}')
+    return gen.toFunction()
+  }
 }
 /* eslint-enable no-template-curly-in-string */
 
