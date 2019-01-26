@@ -89,6 +89,26 @@ Enables caching to increase formatting speed if set to `true`. This is restricte
 
 Formats the `date` according to the `dateFormat`. If no date is passed the current date is used.
 
+### DateFormat#addLocale(language, data)
+
+Adds translations for the names of months and weekdays. 
+
+```js
+dateFormat.addLocale('en', {
+  weekdays: ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'],
+  months: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December']
+})
+```
+Three letter abbreviations of the names are being generated from the months and weekdays.
+
+### DateFormat#setLocale(language)
+
+Changes the locale of the `DateFormat` instace to `language`. Build-in languages: `en` & `de`.
+
+```js
+dateFormat.addLocale('en')
+```
+
 ## Benchmark
 
 ```bash

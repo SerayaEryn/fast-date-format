@@ -63,13 +63,3 @@ test('x', (t) => {
 
   t.ok(formatted)
 })
-
-test('', (t) => {
-  t.plan(1)
-  var dateFormatter = new DateFormatter('x')
-
-  dateFormatter.format()
-  var formatted = dateFormatter.format()
-
-  t.ok(formatted)
-})

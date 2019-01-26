@@ -1,31 +1,46 @@
 'use strict'
 
-const months = require('./lib/months').months
-const monthsShort = require('./lib/months').monthsShort
-const days = require('./lib/days').days
-const daysShort = require('./lib/days').daysShort
 const dayCount = require('./lib/days').dayCount
 const tokenizer = require('./lib/tokenizer')
 const { generateOffset, generateOffsetColon } = require('./lib/offset')
 const genfun = require('generate-function')
+const localeEN = require('./lib/locales/en')
+const localeDE = require('./lib/locales/de')
 
-const format = Symbol('format')
+const formatSym = Symbol('fast-data-format.format')
+const dayCountSym = Symbol('fast-data-format.dayCount')
+const localesSym = Symbol('fast-data-format.locales')
 
 class DateFormatter {
   constructor (options) {
     const dateFormat = typeof options === 'string' ? options : options.dateFormat
-    this.dayCount = dayCount
-    this.daysShort = daysShort
-    this.days = days
-    this.monthsShort = monthsShort
-    this.months = months
-    this.dayCount = dayCount
+    if (typeof options === 'string') {
+      options = {}
+    }
     this._clearCache = this._clearCache.bind(this)
-    this[format] = buildFormatter(dateFormat, options).bind(this)
+    this[dayCountSym] = dayCount
+    this[localesSym] = {}
+    this.addLocale('de', localeDE)
+    this.addLocale('en', localeEN)
+    this.setLocale(options.locale || 'en')
+    this[formatSym] = buildFormatter(dateFormat, options).bind(this)
   }
 
-  format (date = new Date()) {
-    return this[format](date)
+  format (now = new Date()) {
+    return this[formatSym](now, this[dayCountSym])
+  }
+
+  addLocale (language, localeData) {
+    localeData.monthsShort = localeData.months.map(toThreeLetters)
+    localeData.weekdaysShort = localeData.weekdays.map(toThreeLetters)
+    this[localesSym][language] = localeData
+  }
+
+  setLocale (language) {
+    this.months = this[localesSym][language].months
+    this.weekdays = this[localesSym][language].weekdays
+    this.monthsShort = this[localesSym][language].monthsShort
+    this.weekdaysShort = this[localesSym][language].weekdaysShort
   }
 
   _clearCache () {
@@ -36,7 +51,7 @@ class DateFormatter {
 function buildFormatter (dateFormat, options) {
   var tokens = tokenizer.tokenize(dateFormat)
   const gen = genfun()
-  gen('function format (now) {')
+  gen('function format (now, dayCount) {')
   generateVariables(tokens, gen)
   if (options.cache && !hasToken(tokens, 'SSS')) {
     gen(`
@@ -50,7 +65,6 @@ function buildFormatter (dateFormat, options) {
     gen('return `' + tokens.map(processToken).join('') + '`')
   }
   gen('}')
-  // console.log(gen.toString())
   return gen.toFunction()
 }
 
@@ -64,8 +78,8 @@ const tokenToReplacement = {
   mm: '${minutes < 10 ? \'0\': \'\'}${minutes}',
   m: '${minutes}',
   E: '${now.getDay() + 1}',
-  dddd: '${this.days[now.getDay()]}',
-  ddd: '${this.daysShort[now.getDay()]}',
+  dddd: '${this.weekdays[now.getDay()]}',
+  ddd: '${this.weekdaysShort[now.getDay()]}',
   x: '${now.getTime()}',
   HH: '${hours < 10 ? \'0\': \'\'}${hours}',
   H: '${hours}',
@@ -140,9 +154,13 @@ function hasToken (tokens, wantedToken) {
   })
 }
 
+function toThreeLetters (string) {
+  return string.substring(0, 3)
+}
+
 function generateDayOfYear (gen) {
   gen(`let isLeapYear = (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0)
-  let dayOfYear = this.dayCount[month] + date
+  let dayOfYear = dayCount[month] + date
   if (month > 1 && isLeapYear) {
     dayOfYear++
   }`)
