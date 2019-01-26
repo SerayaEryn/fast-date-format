@@ -53,7 +53,7 @@ function buildFormatter (dateFormat, options) {
   const gen = genfun()
   gen('function format (now, dayCount) {')
   generateVariables(tokens, gen)
-  if (options.cache && !hasToken(tokens, 'SSS')) {
+  if (options.cache) {
     gen(`
     if (!this.cache) {
       this.cache = \`${tokens.map(processToken).join('')}\`

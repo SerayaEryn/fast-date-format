@@ -83,7 +83,7 @@ A date format as a string.
 
 #### cache (optional)
 
-Enables caching to increase formatting speed if set to `true`. This is restricted to formats without milliseconds. Defaults to `false`.
+Enables caching to increase formatting speed if set to `true`. Defaults to `false`.
 
 ### DateFormat#format([date])
 
