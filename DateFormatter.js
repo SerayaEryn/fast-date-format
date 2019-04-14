@@ -3,7 +3,7 @@
 const dayCount = require('./lib/days').dayCount
 const tokenizer = require('./lib/tokenizer')
 const { generateOffset, generateOffsetColon } = require('./lib/offset')
-const genfun = require('generate-function')
+const Generator = require('./lib/formatterGenerator')
 const localeEN = require('./lib/locales/en')
 const localeDE = require('./lib/locales/de')
 
@@ -54,11 +54,11 @@ function buildFormatter (dateFormat, options) {
   }
 
   var tokens = tokenizer.tokenize(dateFormat)
-  const gen = genfun()
-  gen('function format (now = new Date(), dayCount) {')
-  generateVariables(tokens, gen)
+  const generator = new Generator()
+  generator.add('function format (now = new Date(), dayCount) {')
+  generateVariables(tokens, generator)
   if (options.cache) {
-    gen(`
+    generator.add(`
     if (!this.cache) {
       this.cache = \`${tokens.map(processToken).join('')}\`
       setTimeout(this._clearCache, 1000 - now.getMilliseconds())
@@ -66,10 +66,10 @@ function buildFormatter (dateFormat, options) {
     return this.cache
     `)
   } else {
-    gen('return `' + tokens.map(processToken).join('') + '`')
+    generator.add('return `' + tokens.map(processToken).join('') + '`')
   }
-  gen('}')
-  return gen.toFunction()
+  generator.add('}')
+  return generator.toFunction()
 }
 
 /* eslint-disable no-template-curly-in-string */
@@ -106,54 +106,54 @@ const tokenToReplacement = {
 
 const knownFormats = {
   x: (dateFormat, options) => {
-    const gen = genfun()
-    gen('function format (now) {')
-    gen('if (now) {')
-    gen('return now.getTime() + \'\'')
-    gen('}')
-    gen('return Date.now() + \'\'')
-    gen('}')
-    return gen.toFunction()
+    const generator = new Generator()
+    generator.add('function format (now) {')
+    generator.add('if (now) {')
+    generator.add('return now.getTime() + \'\'')
+    generator.add('}')
+    generator.add('return Date.now() + \'\'')
+    generator.add('}')
+    return generator.toFunction()
   }
 }
 /* eslint-enable no-template-curly-in-string */
 
-function generateVariables (tokens, gen) {
+function generateVariables (tokens, generator) {
   if (hasToken(tokens, 'Z')) {
-    generateOffset(gen)
+    generateOffset(generator)
   }
   if (hasToken(tokens, 'ZZ')) {
-    generateOffsetColon(gen)
+    generateOffsetColon(generator)
   }
   if (hasToken(tokens, 'SSS')) {
-    gen('const milliseconds = now.getMilliseconds()')
+    generator.add('const milliseconds = now.getMilliseconds()')
   }
   if (hasToken(tokens, 's') || hasToken(tokens, 'ss')) {
-    gen('const seconds = now.getSeconds()')
+    generator.add('const seconds = now.getSeconds()')
   }
   if (hasToken(tokens, 'm') || hasToken(tokens, 'mm')) {
-    gen('const minutes = now.getMinutes()')
+    generator.add('const minutes = now.getMinutes()')
   }
   if (hasToken(tokens, 'H') || hasToken(tokens, 'HH') || hasToken(tokens, 'A') || hasToken(tokens, 'h') || hasToken(tokens, 'hh')) {
-    gen('const hours = now.getHours()')
+    generator.add('const hours = now.getHours()')
   }
   if (hasToken(tokens, 'D') || hasToken(tokens, 'DD') || hasToken(tokens, 'DDD') || hasToken(tokens, 'DDDD')) {
-    gen('const date = now.getDate()')
+    generator.add('const date = now.getDate()')
   }
   if (hasToken(tokens, 'YY') || hasToken(tokens, 'YYYY') || hasToken(tokens, 'DDD') || hasToken(tokens, 'DDDD')) {
-    gen('const year = now.getFullYear()')
+    generator.add('const year = now.getFullYear()')
   }
   if (hasToken(tokens, 'k') || hasToken(tokens, 'kk')) {
-    gen('const hours1 = now.getHours() + 1')
+    generator.add('const hours1 = now.getHours() + 1')
   }
   if (hasToken(tokens, 'h') || hasToken(tokens, 'hh')) {
-    gen('const hours12 = (hours + 11) % 12 + 1')
+    generator.add('const hours12 = (hours + 11) % 12 + 1')
   }
   if (hasToken(tokens, 'M') || hasToken(tokens, 'MM') || hasToken(tokens, 'MMM') || hasToken(tokens, 'MMMM') || hasToken(tokens, 'DDD') || hasToken(tokens, 'DDDD')) {
-    gen('const month = now.getMonth()')
+    generator.add('const month = now.getMonth()')
   }
   if (hasToken(tokens, 'DDD') || hasToken(tokens, 'DDDD')) {
-    generateDayOfYear(gen)
+    generateDayOfYear(generator)
   }
 }
 
@@ -175,8 +175,8 @@ function toThreeLetters (string) {
   return string.substring(0, 3)
 }
 
-function generateDayOfYear (gen) {
-  gen(`let isLeapYear = (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0)
+function generateDayOfYear (generator) {
+  generator.add(`let isLeapYear = (year % 100 === 0) ? (year % 400 === 0) : (year % 4 === 0)
   let dayOfYear = dayCount[month] + date
   if (month > 1 && isLeapYear) {
     dayOfYear++
