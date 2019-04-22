@@ -108,10 +108,17 @@ const knownFormats = {
   x: (dateFormat, options) => {
     const generator = new Generator()
     generator.add('function format (now) {')
-    generator.add('if (now) {')
-    generator.add('return now.getTime() + \'\'')
-    generator.add('}')
-    generator.add('return Date.now() + \'\'')
+    if (options.cache) {
+      generator.add(`
+      if (!this.cache) {
+        this.cache = now ? now.getTime() + '' : Date.now() + ''
+        setTimeout(this._clearCache, 1000 - now.getMilliseconds())
+      }
+      return this.cache
+      `)
+    } else {
+      generator.add('return now ? now.getTime() + \'\' : Date.now() + \'\'')
+    }
     generator.add('}')
     return generator.toFunction()
   }
