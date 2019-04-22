@@ -111,7 +111,10 @@ const knownFormats = {
     if (options.cache) {
       generator.add(`
       if (!this.cache) {
-        this.cache = now ? now.getTime() + '' : Date.now() + ''
+        if (!now) {
+          now = new Date()
+        }
+        this.cache = now.getTime() + ''
         setTimeout(this._clearCache, 1000 - now.getMilliseconds())
       }
       return this.cache

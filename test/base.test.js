@@ -30,6 +30,19 @@ test('x', (t) => {
   t.strictEquals(formatted, '951879845001')
 })
 
+test('x', (t) => {
+  t.plan(2)
+  var dateFormatter = new DateFormatter({
+    dateFormat: 'x',
+    cache: true
+  })
+
+  var formatted = dateFormatter.format()
+
+  t.ok(dateFormatter.cache, '951879845001')
+  t.ok(formatted, '951879845001')
+})
+
 test('YYYYMMDD', (t) => {
   t.plan(1)
   var date = new Date(2000, 2, 1, 3, 4, 5, 1)
