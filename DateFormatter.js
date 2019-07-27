@@ -6,6 +6,7 @@ const { generateOffset, generateOffsetColon } = require('./lib/offset')
 const Generator = require('./lib/formatterGenerator')
 const localeEN = require('./lib/locales/en')
 const localeDE = require('./lib/locales/de')
+const localeIT = require('./lib/locales/it')
 
 const formatSym = Symbol('fast-data-format.format')
 const dayCountSym = Symbol('fast-data-format.dayCount')
@@ -22,6 +23,7 @@ class DateFormatter {
     this[localesSym] = {}
     this.addLocale('de', localeDE)
     this.addLocale('en', localeEN)
+    this.addLocale('it', localeIT)
     this.setLocale(options.locale || 'en')
     this[formatSym] = buildFormatter(dateFormat, options).bind(this)
   }
