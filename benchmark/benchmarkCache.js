@@ -7,6 +7,7 @@ var dateFormat = require('dateformat')
 var format = require('date-format')
 var fecha = require('fecha')
 var speedDate = require('speed-date')
+const dateFnsFormat = require('date-fns-tz').format
 
 var DATE_FORMAT = ('YYYY.MM.DDTHH:mm:ss')
 var DateFormatter = require('../DateFormatter')
@@ -26,13 +27,16 @@ suite
     dateFormat(new Date(), DATE_FORMAT)
   })
   .add('fast-date-format', () => {
-    dateFormatter.format()
+    dateFormatter.format(new Date())
   })
   .add('fecha', () => {
     fecha.format(new Date(), DATE_FORMAT)
   })
   .add('speed-date', () => {
     speedDateFormatter(new Date())
+  })
+  .add('date-fns', () => {
+    dateFnsFormat(new Date(), 'yyyy.MM.dd\'T\'HH:mm:ss')
   })
   .on('cycle', function (event) {
     console.log(String(event.target))

@@ -29,6 +29,8 @@
   "devDependencies": {
     "benchmark": "^2.1.4",
     "coveralls": "^3.0.1",
+    "date-fns": "^2.0.0",
+    "date-fns-tz": "^1.0.7",
     "date-format": "^2.0.0",
     "dateformat": "^3.0.3",
     "fecha": "^3.0.0",
