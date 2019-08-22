@@ -111,14 +111,17 @@ dateFormat.addLocale('en')
 
 ## Benchmark
 
+The benchmark has been run with Node.js v10.16.3.
+
 ```bash
 $ node benchmark/benchmark.js
-moment x 226,501 ops/sec ±0.74% (87 runs sampled)
-date-format x 276,927 ops/sec ±0.61% (86 runs sampled)
-dateformat x 112,760 ops/sec ±1.60% (85 runs sampled)
-fast-date-format x 2,207,410 ops/sec ±0.62% (90 runs sampled)
-fecha x 280,415 ops/sec ±1.27% (89 runs sampled)
-speed-date x 2,035,050 ops/sec ±1.25% (89 runs sampled)
+moment x 268,396 ops/sec ±0.87% (88 runs sampled)
+date-format x 380,505 ops/sec ±0.42% (91 runs sampled)
+dateformat x 99,375 ops/sec ±0.91% (87 runs sampled)
+fast-date-format x 1,116,499 ops/sec ±0.57% (86 runs sampled)
+fecha x 230,543 ops/sec ±0.93% (93 runs sampled)
+speed-date x 1,083,871 ops/sec ±0.65% (91 runs sampled)
+date-fns x 101,370 ops/sec ±1.18% (89 runs sampled)
 Fastest is fast-date-format
 ```
 
@@ -126,12 +129,13 @@ With activated `cache` option:
 
 ```bash
 $ node benchmark/benchmarkCache.js
-moment x 288,008 ops/sec ±1.88% (82 runs sampled)
-date-format x 288,106 ops/sec ±0.52% (85 runs sampled)
-dateformat x 131,345 ops/sec ±1.36% (83 runs sampled)
-fast-date-format x 4,014,322 ops/sec ±1.94% (85 runs sampled)
-fecha x 355,271 ops/sec ±1.46% (86 runs sampled)
-speed-date x 2,670,824 ops/sec ±0.74% (90 runs sampled)
+moment x 356,945 ops/sec ±0.92% (84 runs sampled)
+date-format x 404,826 ops/sec ±0.63% (86 runs sampled)
+dateformat x 111,103 ops/sec ±1.03% (86 runs sampled)
+fast-date-format x 2,618,465 ops/sec ±0.90% (90 runs sampled)
+fecha x 306,050 ops/sec ±0.51% (91 runs sampled)
+speed-date x 1,950,085 ops/sec ±0.82% (86 runs sampled)
+date-fns x 150,776 ops/sec ±0.47% (88 runs sampled)
 Fastest is fast-date-format
 ```
 
