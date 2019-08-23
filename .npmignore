@@ -2,3 +2,5 @@ benchmark
 test
 coverage
 .nyc_output
+.clinic
+.travis.yml
