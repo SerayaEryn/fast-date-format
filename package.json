@@ -27,6 +27,7 @@
   "author": "Denis Fäcke",
   "license": "MIT",
   "devDependencies": {
+    "@clevernature/benchmark-regression": "^1.0.1",
     "benchmark": "^2.1.4",
     "coveralls": "^3.0.1",
     "date-fns": "^2.0.0",
