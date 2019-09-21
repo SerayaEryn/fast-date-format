@@ -1,21 +1,18 @@
 'use strict'
 
-var t = require('tap')
-var test = t.test
+var test = require('ava')
 var DateFormatter = require('..')
 
 test('MMMM', (t) => {
-  t.plan(1)
   var date = new Date(2000, 2, 1, 3, 4, 5, 1)
   var dateFormatter = new DateFormatter({ dateFormat: 'MMMM', locale: 'it' })
 
   var formatted = dateFormatter.format(date)
 
-  t.strictEquals(formatted, 'Marzo')
+  t.is(formatted, 'Marzo')
 })
 
 test('dddd', (t) => {
-  t.plan(8)
   testFormatDate(t, 'dddd', 0, 'Martedì', 'it')
   testFormatDate(t, 'dddd', 1, 'Mercoledì', 'it')
   testFormatDate(t, 'dddd', 2, 'Giovedì', 'it')
@@ -27,7 +24,6 @@ test('dddd', (t) => {
 })
 
 test('ddd', (t) => {
-  t.plan(8)
   testFormatDate(t, 'ddd', 0, 'Mar', 'it')
   testFormatDate(t, 'ddd', 1, 'Mer', 'it')
   testFormatDate(t, 'ddd', 2, 'Gio', 'it')
@@ -42,5 +38,5 @@ function testFormatDate (t, dateFormat, date1, h, locale) {
   var date = new Date(2000, 2, date1, 1, 4, 5, 1)
   var dateFormatter = new DateFormatter({ dateFormat, locale })
   var formatted = dateFormatter.format(date)
-  t.strictEquals(formatted, h)
+  t.is(formatted, h)
 }

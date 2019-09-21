@@ -1,11 +1,9 @@
 'use strict'
 
-var t = require('tap')
-var test = t.test
+var test = require('ava')
 var DateFormatter = require('..')
 
 test('Z', (t) => {
-  t.plan(51)
   offsetZ(t, -720, '+1200')
   offsetZ(t, -690, '+1130')
   offsetZ(t, -660, '+1100')
@@ -60,7 +58,6 @@ test('Z', (t) => {
 })
 
 test('ZZ', (t) => {
-  t.plan(51)
   offsetZZ(t, -720, '+12:00')
   offsetZZ(t, -690, '+11:30')
   offsetZZ(t, -660, '+11:00')
@@ -114,24 +111,22 @@ test('ZZ', (t) => {
   offsetZZ(t, 720, '-12:00')
 })
 
-test('ZZ', (t) => {
-  t.plan(1)
+test('ZZ - should match regex', (t) => {
   var date = new Date(2000, 2, 1, 3, 4, 5, 1)
   var dateFormatter = new DateFormatter('ZZ')
 
   var formatted = dateFormatter.format(date)
 
-  t.ok(/[+-]\d{2}:\d{2}/.test(formatted))
+  t.regex(formatted, /[+-]\d{2}:\d{2}/)
 })
 
-test('Z', (t) => {
-  t.plan(1)
+test('Z - should match regex', (t) => {
   var date = new Date(2000, 2, 1, 3, 4, 5, 1)
   var dateFormatter = new DateFormatter('Z')
 
   var formatted = dateFormatter.format(date)
 
-  t.ok(/[+-]\d{4}/.test(formatted))
+  t.regex(formatted, /[+-]\d{4}/)
 })
 
 function offsetZ (t, offset, expected) {
@@ -150,5 +145,5 @@ function testOffset (t, format, offset, expected) {
   }
   var dateFormatter = new DateFormatter(format)
   var formatted = dateFormatter.format(date)
-  t.strictEquals(formatted, expected)
+  t.is(formatted, expected)
 }

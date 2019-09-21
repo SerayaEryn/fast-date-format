@@ -1,11 +1,9 @@
 'use strict'
 
-var t = require('tap')
-var test = t.test
+var test = require('ava')
 var DateFormatter = require('..')
 
 test('HH', (t) => {
-  t.plan(24)
   testFormatHour(t, 'HH', 0, '00')
   testFormatHour(t, 'HH', 1, '01')
   testFormatHour(t, 'HH', 2, '02')
@@ -33,7 +31,6 @@ test('HH', (t) => {
 })
 
 test('H', (t) => {
-  t.plan(24)
   testFormatHour(t, 'H', 0, '0')
   testFormatHour(t, 'H', 1, '1')
   testFormatHour(t, 'H', 2, '2')
@@ -117,7 +114,6 @@ test('k', (t) => {
 })
 
 test('hh', (t) => {
-  t.plan(24)
   testFormatHour(t, 'hh', 0, '12')
   testFormatHour(t, 'hh', 1, '01')
   testFormatHour(t, 'hh', 2, '02')
@@ -173,7 +169,6 @@ test('h', (t) => {
 })
 
 test('A', (t) => {
-  t.plan(24)
   testAmPm(t, 0, 'am')
   testAmPm(t, 1, 'am')
   testAmPm(t, 2, 'am')
@@ -200,26 +195,16 @@ test('A', (t) => {
   testAmPm(t, 23, 'pm')
 })
 
-test('H', (t) => {
-  t.plan(1)
-  var date = new Date(2000, 2, 1, 3, 4, 5, 1)
-  var dateFormatter = new DateFormatter('H')
-
-  var formatted = dateFormatter.format(date)
-
-  t.strictEquals(formatted, '3')
-})
-
 function testFormatHour (t, format, hour, h) {
   var date = new Date(2000, 2, 1, hour, 4, 5, 1)
   var dateFormatter = new DateFormatter(format)
   var formatted = dateFormatter.format(date)
-  t.strictEquals(formatted, h)
+  t.is(formatted, h)
 }
 
 function testAmPm (t, hour, aPM) {
   var date = new Date(2000, 2, 1, hour, 4, 5, 1)
   var dateFormatter = new DateFormatter('A')
   var formatted = dateFormatter.format(date)
-  t.strictEquals(formatted, aPM)
+  t.is(formatted, aPM)
 }
