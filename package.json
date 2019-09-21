@@ -2,12 +2,12 @@
   "name": "fast-date-format",
   "version": "2.2.3",
   "description": "fast date formating",
-  "main": "DateFormatter.js",
+  "main": "lib/DateFormatter.js",
   "scripts": {
     "unit": "ava test/*.test.js",
     "test": "npm run lint && npm run unit",
     "lint": "standard DateFormatter.js lib/* test/* benchmark/*",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "coverage-report": "nyc npm test && nyc report --reporter=html",
     "benchmark": "node benchmark/benchmark.js"
   },
@@ -30,7 +30,6 @@
     "@clevernature/benchmark-regression": "^1.0.1",
     "ava": "^2.4.0",
     "benchmark": "^2.1.4",
-    "coveralls": "^3.0.1",
     "date-fns": "^2.0.0",
     "date-fns-tz": "^1.0.7",
     "date-format": "^2.0.0",
