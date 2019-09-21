@@ -4,11 +4,11 @@
   "description": "fast date formating",
   "main": "DateFormatter.js",
   "scripts": {
-    "unit": "tap test/*.test.js",
+    "unit": "ava test/*.test.js",
     "test": "npm run lint && npm run unit",
     "lint": "standard DateFormatter.js lib/* test/* benchmark/*",
-    "coveralls": "npm run unit --  --cov",
-    "coverage": "npm run coveralls && tap --coverage-report=lcov",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
+    "coverage-report": "nyc npm test && nyc report --reporter=html",
     "benchmark": "node benchmark/benchmark.js"
   },
   "keywords": [
@@ -28,6 +28,7 @@
   "license": "MIT",
   "devDependencies": {
     "@clevernature/benchmark-regression": "^1.0.1",
+    "ava": "^2.4.0",
     "benchmark": "^2.1.4",
     "coveralls": "^3.0.1",
     "date-fns": "^2.0.0",
@@ -36,8 +37,8 @@
     "dateformat": "^3.0.3",
     "fecha": "^3.0.0",
     "moment": "^2.22.2",
+    "nyc": "^14.1.1",
     "speed-date": "^1.0.0",
-    "standard": "^14.0.0",
-    "tap": "^14.0.0"
+    "standard": "^14.0.0"
   }
 }

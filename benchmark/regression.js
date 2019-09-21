@@ -8,18 +8,22 @@ const benchmarks = createRegressionBenchmark(DateFormatter, ['fast-date-format@l
 benchmarks.add(
   'format with timezone offset',
   (client, formatter) => formatter.format(new Date()),
-  { setup: (CurrentDateFormat) => {
-    const DATE_FORMAT = 'YYYY.MM.DDTHH:mm:ss,SSS ZZ'
-    return new CurrentDateFormat(DATE_FORMAT)
-  } }
+  {
+    setup: (CurrentDateFormat) => {
+      const DATE_FORMAT = 'YYYY.MM.DDTHH:mm:ss,SSS ZZ'
+      return new CurrentDateFormat(DATE_FORMAT)
+    }
+  }
 )
 benchmarks.add(
   'format',
   (client, formatter) => formatter.format(new Date()),
-  { setup: (CurrentDateFormat) => {
-    const DATE_FORMAT = 'YYYY.MM.DDTHH:mm:ss,SSS'
-    return new CurrentDateFormat(DATE_FORMAT)
-  } }
+  {
+    setup: (CurrentDateFormat) => {
+      const DATE_FORMAT = 'YYYY.MM.DDTHH:mm:ss,SSS'
+      return new CurrentDateFormat(DATE_FORMAT)
+    }
+  }
 )
 
 benchmarks.run().catch(err => {
