@@ -1,6 +1,6 @@
 {
   "name": "fast-date-format",
-  "version": "2.2.3",
+  "version": "2.2.4",
   "description": "fast date formating",
   "main": "lib/DateFormatter.js",
   "scripts": {
