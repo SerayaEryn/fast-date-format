@@ -6,7 +6,7 @@
   "scripts": {
     "unit": "ava test/*.test.js",
     "test": "npm run lint && npm run unit",
-    "lint": "standard DateFormatter.js lib/* test/* benchmark/*",
+    "lint": "standard DateFormatter.js lib/* test/* benchmark/*.js",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "coverage-report": "nyc npm test && nyc report --reporter=html",
     "benchmark": "node benchmark/benchmark.js"
@@ -27,17 +27,8 @@
   "author": "Denis Fäcke",
   "license": "MIT",
   "devDependencies": {
-    "@clevernature/benchmark-regression": "^1.0.1",
     "ava": "^2.4.0",
-    "benchmark": "^2.1.4",
-    "date-fns": "^2.0.0",
-    "date-fns-tz": "^1.0.7",
-    "date-format": "^2.0.0",
-    "dateformat": "^3.0.3",
-    "fecha": "^3.0.0",
-    "moment": "^2.22.2",
     "nyc": "^14.1.1",
-    "speed-date": "^1.0.0",
     "standard": "^14.0.0"
   },
   "files": [
