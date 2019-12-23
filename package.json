@@ -28,7 +28,7 @@
   "license": "MIT",
   "devDependencies": {
     "ava": "^2.4.0",
-    "nyc": "^14.1.1",
+    "nyc": "^15.0.0",
     "standard": "^14.0.0"
   },
   "files": [
