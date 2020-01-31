@@ -18,7 +18,7 @@
     "time"
   ],
   "engines": {
-    "node": ">=8"
+    "node": ">=10.13.0"
   },
   "repository": {
     "type": "git",
@@ -27,7 +27,7 @@
   "author": "Denis Fäcke",
   "license": "MIT",
   "devDependencies": {
-    "ava": "^2.4.0",
+    "ava": "^3.0.0",
     "nyc": "^15.0.0",
     "standard": "^14.0.0"
   },
