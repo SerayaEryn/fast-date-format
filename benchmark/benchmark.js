@@ -16,15 +16,27 @@ const speedDateFormatter = speedDate(DATE_FORMAT)
 
 const suite = new Benchmark.Suite()
 
+const now = new Date()
+
+console.table({
+  moment: moment(now).format(DATE_FORMAT),
+  'date-format': format('yyyy.MM.ddThh:mm:ss,SSS O', now),
+  'dateformat': dateFormat(now, 'yyyy.mm.dd\'T\'HH:MM:ss,l o'),
+  'fast-date-format': dateFormatter.format(now),
+  'fecha': fecha.format(now, DATE_FORMAT),
+  'speed-date': speedDateFormatter(now),
+  'date-fns': dateFnsFormat(now, 'yyyy.MM.dd\'T\'HH:mm:ss,SSS XXX')
+})
+
 suite
   .add('moment', () => {
     moment().format(DATE_FORMAT)
   })
   .add('date-format', () => {
-    format(DATE_FORMAT, new Date())
+    format('yyyy.MM.ddThh:mm:ss,SSS O', new Date())
   })
   .add('dateformat', () => {
-    dateFormat(new Date(), DATE_FORMAT)
+    dateFormat(new Date(), 'yyyy.mm.dd\'T\'HH:MM:ss,l o')
   })
   .add('fast-date-format', () => {
     dateFormatter.format(new Date())
