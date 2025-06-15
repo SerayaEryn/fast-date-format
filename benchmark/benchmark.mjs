@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+ 
 'use strict'
 
 import Benchmark from 'benchmark'

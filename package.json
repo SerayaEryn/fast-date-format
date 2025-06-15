@@ -30,15 +30,16 @@
   "scripts": {
     "unit": "ava test/*.test.js",
     "test": "npm run lint && npm run unit",
-    "lint": "standard DateFormatter.mjs lib/* test/* benchmark/*.mjs",
+    "lint": "npx eslint",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "coverage-report": "nyc npm test && nyc report --reporter=html",
     "benchmark": "node benchmark/benchmarkCache.mjs"
   },
   "devDependencies": {
     "ava": "^3.15.0",
-    "nyc": "^15.1.0",
-    "standard": "^15.0.1"
+    "eslint": "^9.29.0",
+    "globals": "^16.2.0",
+    "nyc": "^15.1.0"
   },
   "engines": {
     "node": ">=24.13.0"

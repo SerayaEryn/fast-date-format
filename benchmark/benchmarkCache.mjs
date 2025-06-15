@@ -1,4 +1,4 @@
-/* eslint-disable no-console */
+ 
 import Benchmark from 'benchmark'
 import moment from 'moment'
 import dateFormat from 'dateformat'
