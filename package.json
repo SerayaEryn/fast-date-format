@@ -1,6 +1,6 @@
 {
   "name": "fast-date-format",
-  "version": "3.0.0",
+  "version": "3.0.0-rc.1",
   "description": "fast date formating",
   "keywords": [
     "date",
