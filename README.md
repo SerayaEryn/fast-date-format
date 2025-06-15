@@ -111,7 +111,7 @@ dateFormat.addLocale('en')
 
 ## Benchmark
 
-The benchmark has been run with Node.js v10.16.3.
+The benchmark has been run with Node.js v24.2.0.
 
 ```bash
 $ node benchmark/benchmark.js
