@@ -103,7 +103,7 @@ Three letter abbreviations of the names are being generated from the months and 
 
 ### DateFormat#setLocale(language)
 
-Changes the locale of the `DateFormat` instace to `language`. Build-in languages: `en` & `de`.
+Changes the locale of the `DateFormat` instace to `language`. Build-in languages: `en`, `de` & `it`.
 
 ```js
 dateFormat.setLocale('en')
