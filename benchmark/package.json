@@ -2,12 +2,12 @@
   "dependencies": {
     "@clevernature/benchmark-regression": "^1.0.1",
     "benchmark": "^2.1.4",
-    "date-fns": "^2.0.0",
-    "date-fns-tz": "^1.0.7",
-    "date-format": "^2.0.0",
-    "dateformat": "^3.0.3",
-    "fecha": "^3.0.0",
-    "moment": "^2.22.2",
+    "date-fns": "^4.1.0",
+    "date-fns-tz": "^3.2.0",
+    "date-format": "^4.0.14",
+    "dateformat": "^5.0.3",
+    "fecha": "^4.2.3",
+    "moment": "^2.30.1",
     "speed-date": "^1.0.0"
   }
 }

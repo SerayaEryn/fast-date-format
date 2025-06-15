@@ -1,7 +1,5 @@
-'use strict'
-
-var test = require('ava')
-var DateFormatter = require('..')
+import test from 'ava'
+import { DateFormatter } from '../lib/DateFormatter.mjs'
 
 test('HH', (t) => {
   testFormatHour(t, 'HH', 0, '00')

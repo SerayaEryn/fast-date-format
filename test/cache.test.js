@@ -1,7 +1,5 @@
-'use strict'
-
-var test = require('ava')
-var DateFormatter = require('..')
+import test from 'ava'
+import { DateFormatter } from '../lib/DateFormatter.mjs'
 
 test('should cache formatted date', (t) => {
   var date = new Date(2000, 2, 1, 3, 4, 5, 1)

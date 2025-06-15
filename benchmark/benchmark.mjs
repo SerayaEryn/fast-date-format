@@ -1,18 +1,18 @@
 /* eslint-disable no-console */
 'use strict'
 
-var Benchmark = require('benchmark')
-var moment = require('moment')
-var dateFormat = require('dateformat')
-var format = require('date-format')
-var fecha = require('fecha')
-var speedDate = require('speed-date')
-const dateFnsFormat = require('date-fns-tz').format
+import Benchmark from 'benchmark'
+import moment from 'moment'
+import dateFormat from 'dateformat'
+import format from 'date-format'
+import fecha from 'fecha'
+import speedDate from 'speed-date'
+import { format as dateFnsFormat } from 'date-fns-tz'
+import { DateFormatter } from '../lib/DateFormatter.mjs'
 
-var DATE_FORMAT = ('YYYY.MM.DDTHH:mm:ss')
-var DateFormatter = require('../DateFormatter')
-var dateFormatter = new DateFormatter({ dateFormat: DATE_FORMAT, cache: true })
-var speedDateFormatter = speedDate(DATE_FORMAT)
+const DATE_FORMAT = 'YYYY.MM.DDTHH:mm:ss,SSS ZZ'
+const dateFormatter = new DateFormatter(DATE_FORMAT)
+const speedDateFormatter = speedDate(DATE_FORMAT)
 
 const suite = new Benchmark.Suite()
 
@@ -36,7 +36,7 @@ suite
     speedDateFormatter(new Date())
   })
   .add('date-fns', () => {
-    dateFnsFormat(new Date(), 'yyyy.MM.dd\'T\'HH:mm:ss')
+    dateFnsFormat(new Date(), 'yyyy.MM.dd\'T\'HH:mm:ss,SSS XXX')
   })
   .on('cycle', function (event) {
     console.log(String(event.target))

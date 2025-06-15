@@ -1,37 +1,46 @@
 {
   "name": "fast-date-format",
-  "version": "2.2.4",
+  "version": "3.0.0",
   "description": "fast date formating",
-  "main": "lib/DateFormatter.js",
-  "scripts": {
-    "unit": "ava test/*.test.js",
-    "test": "npm run lint && npm run unit",
-    "lint": "standard DateFormatter.js lib/* test/* benchmark/*.js",
-    "coveralls": "nyc npm test && nyc report --reporter=text-lcov",
-    "coverage-report": "nyc npm test && nyc report --reporter=html",
-    "benchmark": "node benchmark/benchmark.js"
-  },
   "keywords": [
     "date",
     "format",
     "dateformat",
     "time"
   ],
-  "engines": {
-    "node": ">=10.13.0"
+  "homepage": "https://github.com/SerayaEryn/fast-date-format#readme",
+  "bugs": {
+    "url": "https://github.com/SerayaEryn/fast-date-format/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/SerayaEryn/fast-date-format.git"
   },
-  "author": "Denis Fäcke",
   "license": "MIT",
-  "devDependencies": {
-    "ava": "^3.0.0",
-    "nyc": "^15.0.0",
-    "standard": "^15.0.0"
+  "author": "Denis Fäcke",
+  "type": "module",
+  "main": "lib/DateFormatter.mjs",
+  "directories": {
+    "lib": "lib",
+    "test": "test"
   },
   "files": [
     "lib"
-  ]
+  ],
+  "scripts": {
+    "unit": "ava test/*.test.js",
+    "test": "npm run lint && npm run unit",
+    "lint": "standard DateFormatter.mjs lib/* test/* benchmark/*.mjs",
+    "coveralls": "nyc npm test && nyc report --reporter=text-lcov",
+    "coverage-report": "nyc npm test && nyc report --reporter=html",
+    "benchmark": "node benchmark/benchmarkCache.mjs"
+  },
+  "devDependencies": {
+    "ava": "^3.15.0",
+    "nyc": "^15.1.0",
+    "standard": "^15.0.1"
+  },
+  "engines": {
+    "node": ">=24.13.0"
+  }
 }
