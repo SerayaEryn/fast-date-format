@@ -33,7 +33,7 @@
     "lint": "npx eslint",
     "coveralls": "nyc npm test && nyc report --reporter=text-lcov",
     "coverage-report": "nyc npm test && nyc report --reporter=html",
-    "benchmark": "node benchmark/benchmarkCache.mjs"
+    "benchmark": "node benchmark/benchmark.mjs"
   },
   "devDependencies": {
     "ava": "^3.15.0",
