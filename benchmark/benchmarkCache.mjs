@@ -1,4 +1,3 @@
- 
 import Benchmark from 'benchmark'
 import moment from 'moment'
 import dateFormat from 'dateformat'
@@ -19,10 +18,10 @@ suite
     moment().format(DATE_FORMAT)
   })
   .add('date-format', () => {
-    format(DATE_FORMAT, new Date())
+    format('yyyy.MM.ddThh:mm:ss,SSS O', new Date())
   })
   .add('dateformat', () => {
-    dateFormat(new Date(), DATE_FORMAT)
+    dateFormat(new Date(),  'yyyy.mm.dd\'T\'HH:MM:ss,l o')
   })
   .add('fast-date-format', () => {
     dateFormatter.format(new Date())

@@ -115,13 +115,13 @@ The benchmark has been run with Node.js v24.2.0.
 
 ```bash
 $ node benchmark/benchmark.js
-moment x 1,067,359 ops/sec ±0.81% (95 runs sampled)
-date-format x 1,456,299 ops/sec ±0.64% (95 runs sampled)
-dateformat x 329,226 ops/sec ±1.21% (88 runs sampled)
-fast-date-format x 10,463,752 ops/sec ±0.39% (97 runs sampled)
-fecha x 751,617 ops/sec ±1.24% (49 runs sampled)
-speed-date x 9,943,575 ops/sec ±1.04% (95 runs sampled)
-date-fns x 408,991 ops/sec ±0.32% (92 runs sampled)
+moment x 1,063,970 ops/sec ±0.76% (90 runs sampled)
+date-format x 1,209,666 ops/sec ±0.29% (96 runs sampled)
+dateformat x 557,058 ops/sec ±0.36% (95 runs sampled)
+fast-date-format x 10,317,337 ops/sec ±0.41% (97 runs sampled)
+fecha x 740,233 ops/sec ±0.82% (52 runs sampled)
+speed-date x 9,729,244 ops/sec ±0.47% (97 runs sampled)
+date-fns x 417,645 ops/sec ±0.33% (92 runs sampled)
 Fastest is fast-date-format
 ```
 
