@@ -23,7 +23,7 @@ jobs:
           npm install
       - name: Run Tests & generate coverage
         run: |
-          npm run coveralls
+          npm run coverage
       - name: Coveralls Parallel
         uses: coverallsapp/github-action@master
         with:
