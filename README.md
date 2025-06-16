@@ -14,9 +14,9 @@ npm install fast-date-format
 ## Example
 
 ```js
-const DateFormat = require('fast-date-format');
+import { DateFormatter } from 'fast-date-format';
 
-const dateFormat = new DateFormat('YYYYMMDD');
+const dateFormat = new DateFormatter('YYYYMMDD');
 
 dateFormat.format();
 dateFormat.format(new Date());
@@ -27,7 +27,7 @@ dateFormat.format(new Date());
 To escape characters in a format, surround the characters with square brackets.
 
 ```js
-const dateFormat = new DateFormat('[Month: ]MMMM');
+const dateFormat = new DateFormatter('[Month: ]MMMM');
 
 dateFormat.format(); // Month: December
 ```
@@ -69,7 +69,7 @@ Supported formatting tokens:
 
 ## API
 
-### DateFormat(options)
+### DateFormatter(options)
 
 Creates a new date formatter.
 
@@ -85,11 +85,11 @@ A date format as a string.
 
 Enables caching to increase formatting speed if set to `true`. Defaults to `false`.
 
-### DateFormat#format([date])
+### DateFormatter#format([date])
 
 Formats the `date` according to the `dateFormat`. If no date is passed the current date is used.
 
-### DateFormat#addLocale(language, data)
+### DateFormatter#addLocale(language, data)
 
 Adds translations for the names of months and weekdays. 
 
@@ -101,7 +101,7 @@ dateFormat.addLocale('en', {
 ```
 Three letter abbreviations of the names are being generated from the months and weekdays.
 
-### DateFormat#setLocale(language)
+### DateFormatter#setLocale(language)
 
 Changes the locale of the `DateFormat` instace to `language`. Build-in languages: `en`, `de` & `it`.
 
